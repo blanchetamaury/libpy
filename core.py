@@ -84,3 +84,25 @@ def mean(iterable):
     else:
         count = 0
     return count
+
+def sort_insertion(iterable):
+    for i in range(1, len(iterable)):
+        key = iterable[i]
+        j = i - 1
+        while j >= 0 and iterable[j] > key:
+            iterable[j + 1] = iterable[j]
+            j -= 1
+        iterable[j + 1] = key
+    return iterable
+
+def median(iterable):
+    value = sort_insertion(list(iterable))
+    size = len(value)
+    if size == 0:
+        raise ValueError("median() d'un iterable vide")
+    if size % 2 == 0:
+        i = size // 2
+        return (value[i - 1] + value[i]) / 2
+    else:
+        i = size // 2
+        return float(value[i])
