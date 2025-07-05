@@ -48,3 +48,39 @@ def export_csv(source_file ,dest_file , order):
             dic.writeheader()
             for ligne in lecteur:
                 dic.writerow(ligne)
+
+def lerp(a, b, ratio):
+    """Interpolation linéaire entre `a` et `b`.
+
+    Args:
+        a: Valeur de départ.
+        b: Valeur d’arrivée.
+        t: Rapport de 0.0 à 1.0 inclus (0 ⇒ a, 1 ⇒ b).
+
+    Returns:
+        Valeur intermédiaire.
+    """
+    return (b -  a) * ratio + a
+
+def mean(iterable):
+    """Renvoie la moyenne d’un itérable de nombres.
+
+    Args:
+        values: Séquence ou itérateur contenant int/float ou leurs chaînes.
+
+    Returns:
+        Moyenne arithmétique en float.
+
+    Raises:
+        ValueError: Si l’itérable est vide.
+    """
+    count = 0
+    n = 0
+    for j in iterable:
+        count = count + float(j)
+        n += 1
+    if n > 0:
+        count = count / n
+    else:
+        count = 0
+    return count
