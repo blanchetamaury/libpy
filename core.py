@@ -185,3 +185,15 @@ def factoriel_rec(n):
     if n < 0:
         raise ValueError("factorial_iter() n'est pas défini pour n < 0")
     return factoriel_loop(n, 1, 1)
+
+def strlen(iterable):
+    len = 0
+    for _ in iterable:
+        len += 1
+    return len
+
+def new_tab(iterable):
+    new = []
+    for i in iterable:
+        new += [i]
+    return new
