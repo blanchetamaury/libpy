@@ -187,13 +187,82 @@ def factoriel_rec(n):
     return factoriel_loop(n, 1, 1)
 
 def strlen(iterable):
+    """recuperer la longueur d'un tableau.
+
+    Args:
+        iterable: le tableau dont on veux calculer la longueur.
+    """
     len = 0
     for _ in iterable:
         len += 1
     return len
 
 def new_tab(iterable):
+    """cree une deep copie du premier tableau.
+
+    Args:
+        iterable: le tableau a copier.
+    """
     new = []
     for i in iterable:
         new += [i]
     return new
+
+def is_prime(n):
+    """permet de savoir si un nombre et premier ou pas.
+    
+    Args:
+        n: le nombre a testé.
+    Returns:
+        il envoi soit true si c'est un nombre premier et false si ce n'est pas un nombre premier.
+    """
+    result = 1
+    len = 2
+    if n <= 0:
+        return False
+    while result < n:
+        len = 2
+        while len < n:
+            if result * len == n:
+                return False
+            len += 1
+        if result > n / 2:
+            return True
+        result += 1
+    return True
+
+def gcd(a, b):
+    """Trouve le plus grand diviseur commun.
+    
+    Args:
+        a: le premier nombre a verifier.
+        b: le deuxieme nombre a verifier.
+    Returns:
+        il envoi le plus grand diviseur commun.
+    """
+    result = 1
+    j = 1
+    i = 1
+    tab_a = []
+    tab_b = []
+    while i <= a  and i <= b:
+        j = 0
+        while j <= a  and j <= b:
+            if i * j == a:
+               tab_a += [j]
+               tab_a += [i]
+            if i * j == b:
+               tab_b += [i]
+               tab_b += [j]
+            j += 1
+        i += 1
+    i = 0
+    while strlen(tab_a) > i:
+        j = 0
+        while strlen(tab_b) > j:
+            if tab_b[j] == tab_a[i] and tab_b[j] > result:
+                result = tab_b[j]
+            j += 1
+        i += 1
+    return result
+
