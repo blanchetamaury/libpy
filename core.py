@@ -266,3 +266,30 @@ def gcd(a, b):
         i += 1
     return result
 
+def is_container(x):
+    """ teste si c'est un container
+    Args:
+        x: element a testé.
+    Returns: envoie true ou false.
+    """
+    try:
+        iter(x)
+    except TypeError:
+        return False
+    return not isinstance(x, (str, bytes))
+
+def flatten(nested_iterable, depth=-1):
+    """Applatissement des listes imbriquées.
+    Args:
+        nested_iterable: l'element qui contient tout les listes.
+        depth: la profondeur a definir pour l'applatissement,
+        si il est egal a -1 on fait tout, sinon on va jusqu'a 0.
+    Returns: envoi la nouvelle liste applatie."""
+    y = []
+    for item in nested_iterable:
+        if depth != 0 and is_container(item):
+            y += flatten(item, depth - 1)
+        else:
+            y += [item]
+    return y
+
