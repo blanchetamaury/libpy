@@ -1,7 +1,7 @@
 import csv as csv
 import math as mt
 
-def clamp(value, min, max):
+def clamp(value : int, min : int , max: int):
     """Borne value dans l'intervalle min et max.
 
     arg:
@@ -23,7 +23,7 @@ def clamp(value, min, max):
     else:
         return value
 
-def import_csv(fichier):
+def import_csv(fichier : str):
     """Import un fichier en l'ouvrant et le lisant, et renvoie une liste de dictionnaires.
     Arg:
         fichier: le nom du fichier a lire(sans le .csv)
@@ -34,7 +34,7 @@ def import_csv(fichier):
     lecteur = csv.DictReader(open(fichier + '.csv', 'r'))
     return [dict(ligne) for ligne in lecteur]
 
-def export_csv(source_file ,dest_file , order):
+def export_csv(source_file : str, dest_file : str, order : str):
     """Copie un CSV en réordonnant/filtrant les colonnes.
 
     Args:
@@ -50,7 +50,7 @@ def export_csv(source_file ,dest_file , order):
             for ligne in lecteur:
                 dic.writerow(ligne)
 
-def lerp(a, b, ratio):
+def lerp(a : int , b : int, ratio : int):
     """Interpolation linéaire entre `a` et `b`.
 
     Args:
@@ -63,7 +63,7 @@ def lerp(a, b, ratio):
     """
     return (b -  a) * ratio + a
 
-def mean(iterable):
+def mean(iterable : list):
     """Renvoie la moyenne d’un itérable de nombres.
 
     Args:
@@ -86,7 +86,7 @@ def mean(iterable):
         count = 0
     return count
 
-def sort_insertion(iterable):
+def sort_insertion(iterable : list):
     """trie la liste par insertion.
 
     Args:
@@ -104,7 +104,7 @@ def sort_insertion(iterable):
         iterable[j + 1] = key
     return iterable
 
-def median(iterable):
+def median(iterable : list):
     """ trouve la median des list pair et impair.
 
     Args:
@@ -128,7 +128,7 @@ def median(iterable):
         i = size // 2
         return float(value[i])
 
-def stddev(iterable, sample=False):
+def stddev(iterable : list, sample=False):
     """Fait un ecart type sur un échantillon ou une population.
 
     Args:
@@ -155,7 +155,7 @@ def stddev(iterable, sample=False):
     result = result / divisor
     return mt.sqrt(result)
 
-def factoriel_iter(n):
+def factoriel_iter(n : int):
     """Factoriel de n (≥ 0) via iteration.
     """
     if not isinstance(n, int):
@@ -169,12 +169,12 @@ def factoriel_iter(n):
         i += 1
     return value
 
-def factoriel_loop(n, i, value):
+def factoriel_loop(n : int, i : int, value : int):
     if i <= n:
         value = factoriel_loop(n, i + 1, value * i)
     return value
 
-def factoriel_rec(n):
+def factoriel_rec(n : int):
     """Factoriel de n (≥ 0) via récursion terminale.
 
     Attention : CPython ne fait pas d’optimisation TCO,
@@ -186,7 +186,7 @@ def factoriel_rec(n):
         raise ValueError("factorial_iter() n'est pas défini pour n < 0")
     return factoriel_loop(n, 1, 1)
 
-def strlen(iterable):
+def strlen(iterable : list):
     """recuperer la longueur d'un tableau.
 
     Args:
@@ -197,7 +197,7 @@ def strlen(iterable):
         len += 1
     return len
 
-def new_tab(iterable):
+def new_tab(iterable : list):
     """cree une deep copie du premier tableau.
 
     Args:
@@ -208,7 +208,7 @@ def new_tab(iterable):
         new += [i]
     return new
 
-def is_prime(n):
+def is_prime(n : int):
     """permet de savoir si un nombre et premier ou pas.
     
     Args:
@@ -231,7 +231,7 @@ def is_prime(n):
         result += 1
     return True
 
-def gcd(a, b):
+def gcd(a : int , b : int):
     """Trouve le plus grand diviseur commun.
     
     Args:
@@ -278,7 +278,7 @@ def is_container(x):
         return False
     return not isinstance(x, (str, bytes))
 
-def flatten(nested_iterable, depth=-1):
+def flatten(nested_iterable : list, depth=-1):
     """Applatissement des listes imbriquées.
     Args:
         nested_iterable: l'element qui contient tout les listes.
@@ -293,3 +293,59 @@ def flatten(nested_iterable, depth=-1):
             y += [item]
     return y
 
+def chunk(iterable: list, size: int):
+    """Coupe un itérable en sous-listes de longueur fixe.
+    
+    Args:
+        iterable: la liste a decouper.
+        size: la taille des sous liste a creer.
+    Return:
+        les sous listes, si le nombre d'element est inferieur a la size, la sous liste fera la taille du nombre d'element.
+    Raise:
+        ValueError: si size est inferieur ou egal a 0."""
+    i = 0
+    j = 0
+    new = []
+    if size <= 0:
+        raise ValueError("size is not a null number or a negative number.")
+    while j < strlen(iterable):
+        i = 0
+        tmp = []
+        while i < size and j + i < strlen(iterable):
+            tmp += [iterable[j + i]]
+            i += 1
+        new.append(tmp)
+        j += i
+    return new
+
+def unique(iterable : list, key=None):
+    """Élimine les doublons en conservant l’ordre.
+    Args:
+        iterable: list a trier.
+        key : trier par raport a une key si par exemple j'ai un dictionnaire et l'element key.
+    Returns:
+        la liste trier.
+    """
+    new = []
+    new_elem = 0
+    lst_key = []
+    for value in iterable:
+        i = 0
+        status = 0
+        while i < strlen(new):
+            if new[i] == value:
+                status = 1
+            i += 1
+        if status == 0:
+            new_elem = value
+        i = 0
+        if key != None:
+            while i < strlen(lst_key):
+                if key(new_elem) == lst_key[i]:
+                    status = 1
+                i += 1
+        if status == 0:
+            new += [value]
+            if key != None:
+                lst_key += [key(new_elem)]
+    return new
